@@ -844,6 +844,10 @@ static int last_weekday = -1;
 static int last_hour = -1;
 static int last_minute = -1;
 
+static int last_steps = -1;
+static int last_distance = -1;
+static int last_kcal = -1;
+
 {{OBJECTS}}
 {{DECLARE}}
 #if CONFIG_LV_COLOR_DEPTH_16 != 1
@@ -887,6 +891,9 @@ static void watchface_{{NAME}}_invalidate_cached(void)
     last_weekday = -1;
     last_hour = -1;
     last_minute = -1;
+    last_steps = -1;
+    last_distance = -1;
+    last_kcal = -1;
 }
 
 static void watchface_{{NAME}}_set_datetime(int day_of_week, int date, int day, int month, int year, int weekday, int hour,
