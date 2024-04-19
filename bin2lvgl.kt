@@ -731,7 +731,12 @@ const LV_ATTRIBUTE_MEM_ALIGN uint8_t face_${name}_dial_img_${asset}_data_${a}[] 
 {{BYTES}}
     };
 """
+<<<<<<< HEAD
         var text = asset_header.replace("{{NAME}}", name.toLowerCase())
+=======
+        var text =
+            asset_header.replace("{{NAME}}", name.toLowerCase())
+>>>>>>> 625f4cb (Images are now separated into different files)
 
         var bts = "\t"
         var z = 0
