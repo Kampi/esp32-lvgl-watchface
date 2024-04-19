@@ -2,13 +2,19 @@
 #  Copyright (c) 2024 Daniel Kampert
 # Download script for LVGL based ESP32 watchfaces. See https://github.com/Kampi/esp32-lvgl-watchface for more informations
 
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+YELLOW="\033[01;33m"
+CYAN="\033[0;36m"
+NC="\033[0m"
+
 if [ $# -ne 1 ]; then
     echo $0: usage: generate.sh URL-to-ESP32-Watchface
     exit 1
 fi
 
 if [ x"${ZSWATCH_ROOT}" == "x" ]; then 
-    echo "ZSWATCH_ROOT not set! Please set the environment variable before running this script."
+    echo -e ${RED}"ZSWATCH_ROOT not set! Please set the environment variable before running this script."${NC}
     exit
 fi
 
@@ -17,10 +23,10 @@ FILENAME=${URL##*/}
 FILENAME_WITHOUT_ENDING=${FILENAME%%.*}
 
 if test -f "download/${FILENAME}"; then
-    echo "Watchface ${FILENAME} exists. Use file from download directory"
+    echo -e ${GREEN}"Watchface ${FILENAME} exists. Use file from download directory"${NC}
     mv download/${FILENAME} ${FILENAME} 
 else
-    echo "Download watchface ${FILENAME}"
+    echo -e ${GREEN}"Download watchface ${FILENAME}"${NC}
     wget ${1}
 fi
 
