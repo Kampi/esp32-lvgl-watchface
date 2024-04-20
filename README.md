@@ -14,11 +14,12 @@
 
 ## About
 
-This project renders pre-built binary watchfaces on ESP32 using LVGL. A Kotlin script is used to transform the binary watchfaces into LVGL code, which is then compiled for the [ZSWatch](https://github.com/jakkra/ZSWatch).
+> [!IMPORTANT]
+> This script only supports ZSWatch v5 and above!
 
-> NOTE: This script only support ZSWatch v4 and above!
+This project renders pre-built binary watchfaces on ESP32 using LVGL. A Kotlin script transforms the binary watchfaces into LVGL code, which is then compiled for the [ZSWatch](https://github.com/jakkra/ZSWatch).
 
-Forked from [esp32-lvgl-watchface](https://github.com/fbiego/esp32-lvgl-watchface).
+It was forked from [esp32-lvgl-watchface](https://github.com/fbiego/esp32-lvgl-watchface).
 
 ## Video
 
