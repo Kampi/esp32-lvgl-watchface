@@ -261,8 +261,8 @@ fun extractComponents(data: ByteArray, name: String, wd: Int = 240, ht: Int = 24
     var lvUpdateConnection = ""
     var lvUpdateActivity = ""
     var lvUpdateHealth = ""
-    var weatherIc = "const lv_img_dsc_t *face_${name}_dial_img_weather[] = {\n"
-    var connIC = "const lv_img_dsc_t *face_${name}_dial_img_connection[] = {\n"
+    var weatherIc = "const void *face_${name}_dial_img_weather[] = {\n"
+    var connIC = "const void *face_${name}_dial_img_connection[] = {\n"
 
     // loop through the components
     myLoop@ for (x in 0 until no) {
@@ -374,7 +374,7 @@ fun extractComponents(data: ByteArray, name: String, wd: Int = 240, ht: Int = 24
                 rscArr += "};\n"
 
                 if (id == 0x17) {
-                    weatherIc += "    &face_${name}_dial_img_${x}_${clt}_0,\n"
+                    weatherIc += "    ZSW_LV_IMG_USE(face_${name}_dial_img_${x}_${clt}_0),\n"
                 } else if (id == 0x0A) {
                     connIC += "    &face_${name}_dial_img_${x}_${clt}_0,\n"
 
