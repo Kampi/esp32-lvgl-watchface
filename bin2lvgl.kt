@@ -261,8 +261,8 @@ fun extractComponents(data: ByteArray, name: String, wd: Int = 240, ht: Int = 24
     var lvUpdateConnection = ""
     var lvUpdateActivity = ""
     var lvUpdateHealth = ""
-    var weatherIc = "const void *face_${name}_dial_img_weather[] = {\n"
-    var connIC = "const void *face_${name}_dial_img_connection[] = {\n"
+    var weatherIc = "const void *face_${name}_weather[] = {\n"
+    var connIC = "const void *face_${name}_connection[] = {\n"
 
     // loop through the components
     myLoop@ for (x in 0 until no) {
@@ -364,19 +364,19 @@ fun extractComponents(data: ByteArray, name: String, wd: Int = 240, ht: Int = 24
             if (rs == null && drawable) {
                 rsc.add(Resource(clt, x))
 
-                var rscArr = "const void *face_${name}_dial_img_${x}_${clt}_group[] = {\n"
+                var rscArr = "const void *face_${name}_${x}_${clt}_group[] = {\n"
 
                 // save assets & declare
                 for (aa in 0 until cmp) {
-                    declare += "ZSW_LV_IMG_DECLARE(face_${name}_dial_img_${x}_${clt}_${aa});\n"
-                    rscArr += "    ZSW_LV_IMG_USE(face_${name}_dial_img_${x}_${clt}_${aa}),\n"
+                    declare += "ZSW_LV_IMG_DECLARE(face_${name}_${x}_${clt}_${aa});\n"
+                    rscArr += "    ZSW_LV_IMG_USE(face_${name}_${x}_${clt}_${aa}),\n"
                 }
                 rscArr += "};\n"
 
                 if (id == 0x17) {
-                    weatherIc += "    ZSW_LV_IMG_USE(face_${name}_dial_img_${x}_${clt}_0),\n"
+                    weatherIc += "    ZSW_LV_IMG_USE(face_${name}_${x}_${clt}_0),\n"
                 } else if (id == 0x0A) {
-                    connIC += "    &face_${name}_dial_img_${x}_${clt}_0,\n"
+                    connIC += "    &face_${name}_${x}_${clt}_0,\n"
 
                     if (connIC.count { it == '\n' } > 2) {
 
@@ -456,7 +456,7 @@ fun extractComponents(data: ByteArray, name: String, wd: Int = 240, ht: Int = 24
                                 .replace("{{CHILD}}", "face_${name}_${x}_${clt}")
                                 .replace("{{CHILD_X}}", "$xOff")
                                 .replace("{{CHILD_Y}}", "$yOff")
-                                .replace("{{RESOURCE}}", "face_${name}_dial_img_${z}_${clt}_0")
+                                .replace("{{RESOURCE}}", "face_${name}_${z}_${clt}_0")
 
                 if (id == 0x0d) {
                     faceItems +=
@@ -499,14 +499,14 @@ fun extractComponents(data: ByteArray, name: String, wd: Int = 240, ht: Int = 24
 """
     if (getPlaceValue(last_${unit}, $place) != getPlaceValue(${unit}, $place)) {
         last_${unit} = setPlaceValue(last_${unit}, $place, getPlaceValue(${unit}, $place));
-        lv_img_set_src(face_${name}_${x}_${clt}, face_${name}_dial_img_${z}_${clt}_group[${lvT}]);
+        lv_img_set_src(face_${name}_${x}_${clt}, face_${name}_${z}_${clt}_group[${lvT}]);
     }
 """
 
                     }
                     2 -> {
                         lvUpdateBattery +=
-                                "    lv_img_set_src(face_${name}_${x}_${clt}, face_${name}_dial_img_${z}_${clt}_group[${lvT}]);\n"
+                                "    lv_img_set_src(face_${name}_${x}_${clt}, face_${name}_${z}_${clt}_group[${lvT}]);\n"
                         if (lvT == "(battery / 100) % 10") {
                             lvUpdateBattery +=
                                     "    if (battery < 100)\n    {\n        lv_obj_add_flag(face_${name}_${x}_${clt}, LV_OBJ_FLAG_HIDDEN);\n    } else {\n        lv_obj_clear_flag(face_${name}_${x}_${clt}, LV_OBJ_FLAG_HIDDEN);\n    }\n"
@@ -520,37 +520,37 @@ fun extractComponents(data: ByteArray, name: String, wd: Int = 240, ht: Int = 24
 """
     if (getPlaceValue(last_${unit}, $place) != getPlaceValue(${unit}, $place)) {
         last_${unit} = setPlaceValue(last_${unit}, $place, getPlaceValue(${unit}, $place));
-        lv_img_set_src(face_${name}_${x}_${clt}, face_${name}_dial_img_${z}_${clt}_group[${lvT}]);
+        lv_img_set_src(face_${name}_${x}_${clt}, face_${name}_${z}_${clt}_group[${lvT}]);
     }
 """
                     }
                     4 -> {
                         lvUpdateHealth +=
-                                "    lv_img_set_src(face_${name}_${x}_${clt}, face_${name}_dial_img_${z}_${clt}_group[${lvT}]);\n"
+                                "    lv_img_set_src(face_${name}_${x}_${clt}, face_${name}_${z}_${clt}_group[${lvT}]);\n"
                     }
                     5 -> {
                         lvUpdateWeather +=
-                                "    lv_img_set_src(face_${name}_${x}_${clt}, face_${name}_dial_img_${z}_${clt}_group[${lvT}]);\n"
+                                "    lv_img_set_src(face_${name}_${x}_${clt}, face_${name}_${z}_${clt}_group[${lvT}]);\n"
                     }
                 }
             }
             if (id == 0x17) {
                 lvUpdateWeather +=
-                        "    lv_img_set_src(face_${name}_${x}_${clt}, face_${name}_dial_img_weather[icon % 8]);\n"
+                        "    lv_img_set_src(face_${name}_${x}_${clt}, face_${name}_weather[icon % 8]);\n"
             }
             if (id == 0x0b && aOff == 0) {
                 lvUpdateBattery +=
-                        "    lv_img_set_src(face_${name}_${x}_${clt}, face_${name}_dial_img_${z}_${clt}_group[(battery / (100 / ${cmp})) % ${cmp}]);\n"
+                        "    lv_img_set_src(face_${name}_${x}_${clt}, face_${name}_${z}_${clt}_group[(battery / (100 / ${cmp})) % ${cmp}]);\n"
             }
             if (id == 0x0a) {
                 lvUpdateConnection +=
-                        "    lv_img_set_src(face_${name}_${x}_${clt}, face_${name}_dial_img_connection[(connection ? 0 : 1) % 2]);\n"
+                        "    lv_img_set_src(face_${name}_${x}_${clt}, face_${name}_connection[(connection ? 0 : 1) % 2]);\n"
             }
             if (id == 0x08) {
                 lvUpdateTime +=
                         "    if (mode)\n    {\n        lv_obj_add_flag(face_${name}_${x}_${clt}, LV_OBJ_FLAG_HIDDEN);\n    } else {\n        lv_obj_clear_flag(face_${name}_${x}_${clt}, LV_OBJ_FLAG_HIDDEN);\n    }\n"
                 lvUpdateTime +=
-                        "    lv_img_set_src(face_${name}_${x}_${clt}, face_${name}_dial_img_${z}_${clt}_group[(am ? 0 : 1) % 2]);\n"
+                        "    lv_img_set_src(face_${name}_${x}_${clt}, face_${name}_${z}_${clt}_group[(am ? 0 : 1) % 2]);\n"
             }
 
             if (id == 0x0d && (lan == 17 || lan == 33)) {
@@ -602,8 +602,7 @@ fun extractComponents(data: ByteArray, name: String, wd: Int = 240, ht: Int = 24
     g2d.dispose()
 
     saveAsset(bufferBytes(scaledCanvas), 160, 160, false, 1, name, "preview")
-
-    declare += "ZSW_LV_IMG_DECLARE(face_${name}_dial_img_preview_0);\n"
+    declare += "ZSW_LV_IMG_DECLARE(face_${name}_preview_0);\n"
 
     c_file =
             c_file.replace("{{NAME}}", name.toLowerCase())
@@ -727,7 +726,7 @@ fun saveAsset(
     for (a in 0 until amount) {
         var dat =
                 """
-const LV_ATTRIBUTE_MEM_ALIGN uint8_t face_${name}_dial_img_${asset}_data_${a}[] = {
+const LV_ATTRIBUTE_MEM_ALIGN uint8_t face_${name}_${asset}_data_${a}[] = {
 {{BYTES}}
     };
 """
@@ -778,13 +777,13 @@ const LV_ATTRIBUTE_MEM_ALIGN uint8_t face_${name}_dial_img_${asset}_data_${a}[] 
 
         val obj =
                 """
-const lv_img_dsc_t face_${name}_dial_img_${asset}_${a} = {
+const lv_img_dsc_t face_${name}_${asset}_${a} = {
     .header.always_zero = 0,
     .header.w = $width,
     .header.h = $height,
-    .data_size = sizeof(face_${name}_dial_img_${asset}_data_${a}),
+    .data_size = sizeof(face_${name}_${asset}_data_${a}),
     .header.cf = $color,
-    .data = face_${name}_dial_img_${asset}_data_${a}};
+    .data = face_${name}_${asset}_data_${a}};
 """
 
         text += obj
@@ -797,7 +796,7 @@ const lv_img_dsc_t face_${name}_dial_img_${asset}_${a} = {
             println("Created output folder")
         }
 
-        val fl = File(dir, "${name}_${asset}_${a}.c")
+        val fl = File(dir, "face_${name}_${asset}_${a}.c")
         fl.writeText(text)
     }
 }
@@ -898,7 +897,7 @@ static void watchface_{{NAME}}_invalidate_cached(void)
 
 static const void * watchface_{{NAME}}_get_preview_img(void)
 {
-    return ZSW_LV_IMG_USE(face_{{NAME}}_dial_img_preview_0);
+    return ZSW_LV_IMG_USE(face_{{NAME}}_preview_0);
 }
 
 static void watchface_{{NAME}}_set_datetime(int day_of_week, int date, int day, int month, int year, int weekday, int hour,
