@@ -858,14 +858,14 @@ static int last_kcal = -1;
 #endif
 
 {{RSC_ARR}}
-int32_t getPlaceValue(int32_t num, int32_t place) {
+static int32_t getPlaceValue(int32_t num, int32_t place) {
     int32_t divisor = 1;
     for (uint32_t i = 1; i < place; i++)
         divisor *= 10;
     return (num / divisor) % 10;
 }
 
-int32_t setPlaceValue(int32_t num, int32_t place, int32_t newValue) {
+static int32_t setPlaceValue(int32_t num, int32_t place, int32_t newValue) {
     int32_t divisor = 1;
     for (uint32_t i = 1; i < place; i++)
         divisor *= 10;
