@@ -731,12 +731,7 @@ const LV_ATTRIBUTE_MEM_ALIGN uint8_t face_${name}_dial_img_${asset}_data_${a}[] 
 {{BYTES}}
     };
 """
-<<<<<<< HEAD
         var text = asset_header.replace("{{NAME}}", name.toLowerCase())
-=======
-        var text =
-            asset_header.replace("{{NAME}}", name.toLowerCase())
->>>>>>> 625f4cb (Images are now separated into different files)
 
         var bts = "\t"
         var z = 0
@@ -901,6 +896,11 @@ static void watchface_{{NAME}}_invalidate_cached(void)
     last_kcal = -1;
 }
 
+static const void * watchface_{{NAME}}_get_preview_img(void)
+{
+    return ZSW_LV_IMG_USE(face_{{NAME}}_dial_img_preview_0);
+}
+
 static void watchface_{{NAME}}_set_datetime(int day_of_week, int date, int day, int month, int year, int weekday, int hour,
                                    int minute, int second, uint32_t usec, bool am, bool mode)
 {
@@ -1010,6 +1010,7 @@ static watchface_ui_api_t ui_api = {
     .set_datetime = watchface_{{NAME}}_set_datetime,
     .set_watch_env_sensors = watchface_{{NAME}}_set_watch_env_sensors,
     .ui_invalidate_cached = watchface_{{NAME}}_invalidate_cached,
+    .get_preview_img = watchface_{{NAME}}_get_preview_img,
 };
 
 static int watchface_{{NAME}}_init(void)
