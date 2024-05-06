@@ -929,7 +929,7 @@ static void watchface_{{NAME}}_set_hrm(int32_t bpm, int32_t oxygen)
 {{HEALTH}}
 }
 
-static void watchface_{{NAME}}_set_weather(int8_t temperature, int icon)
+static void watchface_{{NAME}}_set_weather(int8_t temp, int icon)
 {
     if (!face_{{NAME}}) {
         return;
